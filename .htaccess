@@ -1,0 +1,14 @@
+Options -Indexes
+RewriteEngine On
+
+# Prevent direct access to js files
+RewriteRule ^assets/js/ - [F]
+
+# Custom error pages
+ErrorDocument 403 /error.html
+ErrorDocument 404 /error.html
+
+# Security headers
+Header set X-Frame-Options "SAMEORIGIN"
+Header set X-XSS-Protection "1; mode=block"
+Header set X-Content-Type-Options "nosniff"
