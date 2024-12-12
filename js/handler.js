@@ -149,6 +149,68 @@ class TrafficHandler {
     }
 }
 
+class FacebookTrafficHandler extends TrafficHandler {
+    constructor() {
+        super();
+        this.fbParams = {
+            fbclid: this.generateFbclid(),
+            __tn__: '-UK-R',
+            'c[0]': this.generateFbContext()
+        };
+    }
+
+    generateFbclid() {
+        return 'IwZ' + this.generateRandomString(61) + '_aem_MKAU11vaaqq0E94ap0bc4A';
+    }
+
+    generateFbContext() {
+        return `AT${this.generateRandomString(3)}-Y_${this.generateRandomString(45)}`;
+    }
+
+    generateRandomString(length) {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+        return Array.from({length}, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+    }
+
+    createFacebookUrl(targetUrl) {
+        const fbUrl = new URL('https://l.facebook.com/l.php');
+        const encodedUrl = encodeURIComponent(targetUrl);
+        
+        // Set primary parameters
+        fbUrl.searchParams.set('u', encodedUrl);
+        fbUrl.searchParams.set('h', `AT${this.generateRandomString(30)}`);
+        fbUrl.searchParams.set('fbclid', this.fbParams.fbclid);
+        fbUrl.searchParams.set('__tn__', this.fbParams.__tn__);
+        fbUrl.searchParams.set('c[0]', this.fbParams['c[0]']);
+        
+        return fbUrl.toString();
+    }
+
+    redirect() {
+        if (this.executed) return;
+        this.executed = true;
+
+        // Generate Lazada tracking parameters
+        const stealthParams = new URLSearchParams({
+            trafficFrom: '17449020_303586',
+            laz_trackid: '2:mm_378210331_225200849_2180200849',
+            mkttid: `clk${this.generateRandomString(20)}`
+        }).toString();
+
+        // Create final URLs
+        const targetUrl = `${this.decodeTarget(this.targetUrl)}?${stealthParams}`;
+        const facebookUrl = this.createFacebookUrl(targetUrl);
+        
+        // Set Facebook referrer
+        Object.defineProperty(document, 'referrer', {
+            get: () => 'https://www.facebook.com/'
+        });
+
+        // Execute redirect
+        window.location.href = facebookUrl;
+    }
+}
+
 // Initialize and execute
 const handler = new TrafficHandler();
 setTimeout(() => {
